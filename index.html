@@ -203,8 +203,8 @@
             var y1 = document.getElementById("date_end_y").value;
             var m1 = document.getElementById("date_end_m").value;
             var d1 = document.getElementById("date_end_d").value;
-            var day0 = new Date(y0, m0, d0, 0, 0, 0);
-            var day1 = new Date(y1, m1, d1, 23, 59, 59);
+            var day0 = new Date(parseInt(y0), parseInt(m0), parseInt(d0), 0, 0, 0);
+            var day1 = new Date(parseInt(y1), parseInt(m1), parseInt(d1), 23, 59, 59);
             console.log(day0);
             console.log(day1);
             var unix0 = day0.getTime();
