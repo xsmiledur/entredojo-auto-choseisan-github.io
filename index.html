@@ -298,7 +298,7 @@
                     dataType: 'jsonp',
                     data: {
                         "id": String(id),
-                        "flg": "2",
+                        "flg": "1",
                         "username": "",
                         "dates": ""
                     },
@@ -368,9 +368,8 @@
     </script>
 
     <script async defer src="https://apis.google.com/js/api.js"
-            onload="this.onload=function(){};handleClientLoad()"
-            onreadystatechange="if (this.readyState === 'complete') this.onload()">
-    </script>
+            onload="this.onload = function () { }; handleClientLoad();"
+            onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
     <!--<script async defer src="https://apis.google.com/js/api.js"
             onload="this.onload=function(){};"
             onreadystatechange="if (this.readyState === 'complete') this.onload()">
