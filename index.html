@@ -4,19 +4,50 @@
 <head>
     <title>Google Calendar API Quickstart</title>
     <meta charset="utf-8" />
+
+    <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">-->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#datepicker").datepicker();
+        });
+    </script>
+
 </head>
 <body>
     <p>Google Calendar API Quickstart</p>
 
+    <p>Date: <input type="text" id="datepicker"></p>
+
+    <!-- 日程調整の区間を決定 カレンダー入力 -->
+    <div id="determine-adjust-dates" style="display:none">
+    </div>
+
+
+    <!-- グーグルAuthorizeして勝手にカレンダー入力 -->
+    <div id="fill-in-dates" style="display:none">
+        <button id="authorize_button" style="display: none;">Authorize and Automatic Fill in</button>
+        <button id="signout_button" style="display: none;">Sign Out</button>
+    </div>
+
+    <!-- 日程調整の結果を表示 -->
+    <div id="result" style="display:none">
+
+    </div>
+
+
     <!--Add buttons to initiate auth sequence and sign out-->
-    <button id="authorize_button" style="display: none;">Authorize</button>
-    <button id="signout_button" style="display: none;">Sign Out</button>
 
     <pre id="content" style="white-space: pre-wrap;"></pre>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
     <script type="text/javascript">
+
+
+
         // Client ID and API key from the Developer Console
         //var CLIENT_ID = '<YOUR_CLIENT_ID>';
         //var API_KEY = '<YOUR_API_KEY>';
@@ -33,6 +64,84 @@
 
         var authorizeButton = document.getElementById('authorize_button');
         var signoutButton = document.getElementById('signout_button');
+
+
+
+        //const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
+        //$.ajax({
+        //    type: 'GET',
+        //    url: endpoint,
+        //    dataType: 'jsonp',
+        //    data: {
+        //        "id": "3",
+        //        "flg": "1",
+        //        "username": "yuri",
+        //        "dates": ""
+        //    },
+        //    success: out => {
+        //        alert(out.message);
+        //    }
+        //});
+
+
+        /* まずidの有無を調べる */
+        var id = getParam('id'); // 日程調整のid
+        var flg;
+        var username = "";
+        var dates = "";
+        if (id == null || id == "") { // idが無い場合日程調整の初期決定をさせるを行わせる
+            console.log("id nothing");
+            flg = 1;
+            $("#determine-adjust-dates").show();
+        } else {
+            var result = getParam('result');
+            if (result == "true" || result == true) {
+
+                /* idで区間を取ってくる */
+                $.ajax({
+                    type: 'GET',
+                    url: endpoint,
+                    dataType: 'jsonp',
+                    data: {
+                        "id": id,
+                        "flg": "1",
+                        "username": "",
+                        "dates": ""
+                    },
+                    success: out => {
+                        dates = out.dates;
+                        /* GoogleアカウントのAuthorizeをして，結果をSpreadsheetに出力 */
+                        handleClientLoad();
+                    }
+                });
+
+
+                $("#fill-in-dates").show();
+            } else {
+                // 結果を表示
+                flg = 3;
+                $("#result").show();
+            }
+        }
+
+
+        /**
+         * Get the URL parameter value
+         *
+         * @param  name {string} パラメータのキー文字列
+         * @return  url {url} 対象のURL文字列（任意）
+         */
+        function getParam(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+
 
         /**
          *  On load, called to load the auth2 library and API client library.
@@ -122,6 +231,7 @@
                 var events = response.result.items;
                 appendPre('Upcoming events:');
 
+                // datesの区間内でイベントを取っていく
 
 
                 if (events.length > 0) {
@@ -138,25 +248,29 @@
                 }
 
 
+
+
                 const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
                 $.ajax({
                     type: 'GET',
                     url: endpoint,
                     dataType: 'jsonp',
                     data: {
-                        id: '3'
+                        "id": "3",
+                        "flg": "1",
+                        "username": "yuri",
+                        "dates": ""
                     },
                     success: out => {
                         alert(out.message);
                     }
                 });
 
-
                 // HTTP Request
                 // curl -sL https://script.google.com/macros/s/{{scriptId}}/exec?id=1TGGjHvLyYwTh2QryVYjfyx2ZC1_FRvuAXck7Ha69GCg
                 // curl -X POST -H "Content-Type: application/json" -d "{\"id\": \"1TGGjHvLyYwTh2QryVYjfyx2ZC1_FRvuAXck7Ha69GCg\",\"items\": [{\"id\": 1362911615,\"value\": \"田中太郎\"},{\"id\": 676568096,\"value\": \"L\"},{\"id\": 911411168,\"value\": \"よろしくお願いします！\"}]}" -sL https://script.google.com/macros/s/{{scriptId}}/exec
                 //var xhr = new XMLHttpRequest();
-                
+
                 //console.log("hello world!");
                 //xhr.open('POST', 'https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec', true);
                 //console.log("hello world!");
