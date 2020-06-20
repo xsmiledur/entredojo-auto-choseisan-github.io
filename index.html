@@ -159,18 +159,17 @@
             const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
             console.log("submit");
             var y0 = document.getElementById("date_start_y").value;
-            console.log(y0);
             var m0 = document.getElementById("date_start_m").value;
             var d0 = document.getElementById("date_start_d").value;
             var y1 = document.getElementById("date_end_y").value;
             var m1 = document.getElementById("date_end_m").value;
             var d1 = document.getElementById("date_end_d").value;
-            var day0 = y0 + "-" + m0 + "-" + d0 + " " + "00:00:00";
-            var day1 = y1 + "-" + m1 + "-" + d1 + " " + "23:59:59";
+            var day0 = new Date(y0, m0, d0, 0, 0, 0);
+            var day1 = new Date(y1, m1, d1, 23, 59, 59);
             console.log(day0);
             console.log(day1);
-            var unix0 = Date.parse(day0);
-            var unix1 = Date.parse(day1);
+            var unix0 = day0.getTime();
+            var unix1 = day1.getTime();
 
             /* 区間を送信する */
             $.ajax({
