@@ -137,7 +137,10 @@
                         console.log("date0", date0);
                         console.log("date1", date1);
 
-                        $('#adjust-dates-show').text("日程調整の期間: " + date0 + " - " + date1);
+                        var date0str = date0.getFullYear() + "/" + date0.getMonth() + "/" + date1.getDate();
+                        var date1str = date1.getFullYear() + "/" + date1.getMonth() + "/" + date1.getDate();
+
+                        $('#adjust-dates-show').text("日程調整の期間: " + date0str + " - " + date1str);
                     },
                 });
 
