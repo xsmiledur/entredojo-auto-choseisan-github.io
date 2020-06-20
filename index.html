@@ -196,12 +196,12 @@
             var month = d.getMonth();
             var m = ('00' + month).slice(-2);
             var day = d.getDate();
-            var d = ('00' + day).slice(-2);
+            var date = ('00' + day).slice(-2);
             var hour = d.getHours();
             var h = ('00' + hour).slice(-2);
             var min = d.getMinutes();
             var mm = ('00' + min).slice(-2);
-            var str = y + "/" + m + "/" + d + " " + h + ":" + mm;
+            var str = y + "/" + m + "/" + date + " " + h + ":" + mm;
             return str;
         }
 
@@ -291,7 +291,7 @@
                     }
                 }
 
-                // datesの区間内でイベントを取っていく
+                // datesの区間内で当該ユーザのイベントを取っていく
                 const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
                 console.log("search id:", id);
                 $.ajax({
@@ -305,9 +305,8 @@
                         "dates": timestr
                     },
                     success: out => {
-                        dates = out.dates; // 区間を取ってくる
+                        dates = out.dates; // 当該ユーザのイベントを取ってくる
                         console.log(dates);
-                        alert("get 期間");
                     }
                 });
 
@@ -366,8 +365,6 @@
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, " "));
         }
-
-
 
         /**
          *  On load, called to load the auth2 library and API client library.
@@ -477,10 +474,6 @@
     <script async defer src="https://apis.google.com/js/api.js"
             onload="this.onload = function () { }; handleClientLoad();"
             onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
-    <!--<script async defer src="https://apis.google.com/js/api.js"
-            onload="this.onload=function(){};"
-            onreadystatechange="if (this.readyState === 'complete') this.onload()">
-    </script>-->
 </body>
 </html>
 <!-- [END calendar_quickstart] -->
