@@ -177,8 +177,10 @@
                         console.log("date0", date0);
                         console.log("date1", date1);
 
-                        var date0str = date0.getFullYear() + "/" + date0.getMonth() + "/" + date0.getDate() + " " + date0.getHours() + ":" + date0.getMinutes();
-                        var date1str = date1.getFullYear() + "/" + date1.getMonth() + "/" + date1.getDate() + " " + date1.getHours() + ":" + date1.getMinutes();
+                        var date0str = formatting(date0);
+                        var date1str = formatting(date1);
+                        //var date0str = date0.getFullYear() + "/" + date0.getMonth() + "/" + date0.getDate() + " " + date0.getHours() + ":" + date0.getMinutes();
+                        //var date1str = date1.getFullYear() + "/" + date1.getMonth() + "/" + date1.getDate() + " " + date1.getHours() + ":" + date1.getMinutes();
 
                         appendPre(date0str + " - " + date1str);
 
@@ -187,6 +189,20 @@
                     //handleClientLoad();
                 }
             });
+        }
+
+        function formatting(d) {
+            var y = d.getFullYear();
+            var month = d.getMonth();
+            var m = ('00' + month).slice(-2);
+            var day = d.getDate();
+            var d = ('00' + day).slice(-2);
+            var hour = d.getHours();
+            var h = ('00' + hour).slice(-2);
+            var min = d.getMinutes();
+            var mm = ('00' + min).slice(-2);
+            var str = y + "/" + m + "/" + d + " " + h + ":" + mm;
+            return str;
         }
 
         function sendAdjustDates() {
