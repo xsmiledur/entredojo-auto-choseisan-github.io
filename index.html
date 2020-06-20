@@ -129,11 +129,6 @@
                         /* GoogleアカウントのAuthorizeをして，結果をSpreadsheetに出力 */
                         handleClientLoad();
                     },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        console.log(XMLHttpRequest); // XMLHttpRequestオブジェクト
-                        console.log(textStatus); // status は、リクエスト結果を表す文字列
-                        console.log(errorThrown); // errorThrown は、例外オブジェクト
-                    }
                 });
 
 
@@ -306,11 +301,6 @@
                         dates = out.dates; // 区間を取ってくる
                         console.log(dates);
                         alert("get 期間");
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        console.log(XMLHttpRequest); // XMLHttpRequestオブジェクト
-                        console.log(textStatus); // status は、リクエスト結果を表す文字列
-                        console.log(errorThrown); // errorThrown は、例外オブジェクト
                     }
                 });
 
@@ -367,9 +357,9 @@
 
     </script>
 
-    <script async defer src="https://apis.google.com/js/api.js"
+    <!--<script async defer src="https://apis.google.com/js/api.js"
             onload="this.onload = function () { }; handleClientLoad();"
-            onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
+            onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>-->
     <!--<script async defer src="https://apis.google.com/js/api.js"
             onload="this.onload=function(){};"
             onreadystatechange="if (this.readyState === 'complete') this.onload()">
