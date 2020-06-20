@@ -107,6 +107,10 @@
             var result = getParam('result');
             if (result == "true" || result == true) {
 
+                // 結果を表示
+                flg = 3;
+                $("#result").show();
+            } else {
                 /* idで区間を取ってくる */
                 const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
                 $.ajax({
@@ -128,10 +132,6 @@
 
 
                 $("#fill-in-dates").show();
-            } else {
-                // 結果を表示
-                flg = 3;
-                $("#result").show();
             }
         }
 
