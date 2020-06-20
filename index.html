@@ -169,8 +169,7 @@
                 },
                 success: out => {
                     var dates = out.dates;
-
-                    appendPre("日程調整の結果");
+                    // 1列目は日程調整しようとした期間が入ってる
                     for (var i = 0; i < dates.length; ++i) {
                         var date0 = new Date(dates[i][0]);
                         var date1 = new Date(dates[i][1]);
@@ -181,8 +180,10 @@
                         var date1str = formatting(date1);
                         //var date0str = date0.getFullYear() + "/" + date0.getMonth() + "/" + date0.getDate() + " " + date0.getHours() + ":" + date0.getMinutes();
                         //var date1str = date1.getFullYear() + "/" + date1.getMonth() + "/" + date1.getDate() + " " + date1.getHours() + ":" + date1.getMinutes();
+                        if (i == 0) {
+                            appendPre("日程調整の結果: (" + date0str + " - " + date1str + ")");
 
-                        appendPre(date0str + " - " + date1str);
+                        } else appendPre(date0str + " - " + date1str);
 
                     }
                     /* GoogleアカウントのAuthorizeをして，結果をSpreadsheetに出力 */
