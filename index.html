@@ -168,14 +168,12 @@
                     "dates": ""
                 },
                 success: out => {
-                    var _dates = out.dates;
-                    dates = _dates.split(",");
+                    var dates = out.dates;
 
                     appendPre("日程調整の結果");
                     for (var i = 0; i < dates.length; ++i) {
-                        var d_ = dates[i].split('-');
-                        var unix0 = new Date(d_[0]);
-                        var unix1 = new Date(d_[1]);
+                        var unix0 = new Date(dates[i][0]);
+                        var unix1 = new Date(dates[i][1]);
 
                         var date0 = new Date(parseInt(unix0));
                         var date1 = new Date(parseInt(unix1));
