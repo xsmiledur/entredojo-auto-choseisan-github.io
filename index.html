@@ -15,7 +15,7 @@
     <p>Google Calendar API Quickstart</p>
 
     <!-- 日程調整の区間を決定 カレンダー入力 -->
-    <div id="determine-adjust-dates" style="display:none">
+    <div id="determine_adjust_dates" style="display:none">
         <p>日程調整の期間を決定してください</p>
         <p>
             <input type="text" id="date_start_y" value="2020">/
@@ -31,7 +31,7 @@
     </div>
 
     <!-- グーグルAuthorizeして勝手にカレンダー入力 -->
-    <div id="fill-in-dates" style="display:none">
+    <div id="fill_in_dates" style="display:none">
         <p id="adjust-dates-show">日程調整の期間: </p>
         <button id="submit_your_dates" onClick="sendYourDates()">あなたの日程の情報を送る</button>
         <button id="authorize_button" style="display: none;">Authorize and Automatic Fill in</button>
@@ -103,7 +103,7 @@
         if (id == null || id == "") { // idが無い場合日程調整の初期決定をさせるを行わせる
             console.log("id nothing");
             flg = 1;
-            $("#determine-adjust-dates").show();
+            $("#determine_adjust_dates").show();
             //document.getElementById('submit-adjust-dates').onclick(sendAdjustDates);
         } else {
             var result = getParam('result');
@@ -112,8 +112,9 @@
                 // 結果を表示
                 flg = 3;
                 $("#result").show();
+                getAdjustResult();
             } else {
-                $("#fill-in-dates").show();
+                $("#fill_in_dates").show();
                 console.log("id: ", id);
                 /* idで区間を取ってくる */
                 const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
@@ -142,7 +143,6 @@
 
                         var date0str = date0.getFullYear() + "/" + date0.getMonth() + "/" + date0.getDate();
                         var date1str = date1.getFullYear() + "/" + date1.getMonth() + "/" + date1.getDate();
-
                         $('#adjust-dates-show').text("日程調整の期間: " + date0str + " - " + date1str);
                     },
                 });
@@ -153,6 +153,45 @@
 
 
             }
+        }
+
+        function getAdjustResult() {
+            /* 日程調整結果を得る */
+            $.ajax({
+                type: 'GET',
+                url: endpoint,
+                dataType: 'jsonp',
+                data: {
+                    "id": String(id),
+                    "flg": "4",
+                    "username": "",
+                    "dates": ""
+                },
+                success: out => {
+                    var _dates = out.dates;
+                    dates = _dates.split(",");
+
+                    appendPre("日程調整の結果");
+                    for (var i = 0; i < dates.length; ++i) {
+                        var d_ = dates[i].split('-');
+                        var unix0 = new Date(d_[0]);
+                        var unix1 = new Date(d_[1]);
+
+                        var date0 = new Date(parseInt(unix0));
+                        var date1 = new Date(parseInt(unix1));
+                        console.log("date0", date0);
+                        console.log("date1", date1);
+
+                        var date0str = date0.getFullYear() + "/" + date0.getMonth() + "/" + date0.getDate();
+                        var date1str = date1.getFullYear() + "/" + date1.getMonth() + "/" + date1.getDate();
+
+                        appendPre(date0str + " - " + date1str);
+
+                    }
+                    /* GoogleアカウントのAuthorizeをして，結果をSpreadsheetに出力 */
+                    //handleClientLoad();
+                }
+            });
         }
 
         function sendAdjustDates() {
@@ -187,11 +226,8 @@
                     console.log("generated id: ", id);
 
                     // ページを切り替える
-                    $("#determine-adjust-dates").hide();
-                    $("#fill-in-dates").show();
-                    $("#init_client").show();
-                    /* GoogleアカウントのAuthorizeをして，結果をSpreadsheetに出力 */
-                    //handleClientLoad();
+                    window.location.href = "https://xsmiledur.github.io/entredojo-auto-choseisan-github.io/?id=" + String(id) + "&result=true";
+
                 }
             });
         }
@@ -295,8 +331,8 @@
                         console.log("generated id: ", id);
 
                         // ページを切り替える
-                        $("#determine-adjust-dates").hide();
-                        $("#fill-in-dates").show();
+                        $("#determine_adjust_dates").hide();
+                        $("#fill_in_dates").show();
                         $("#init_client").show();
                         /* GoogleアカウントのAuthorizeをして，結果をSpreadsheetに出力 */
                         //handleClientLoad();
