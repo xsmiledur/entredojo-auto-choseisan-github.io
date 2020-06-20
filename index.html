@@ -18,14 +18,14 @@
     <div id="determine-adjust-dates" style="display:none">
         <p>日程調整の期間を決定してください</p>
         <p>
-            <input type="text" id="date-start-y" value="2020">/
-            <input type="text" id="date-start-m" value="06">/
-            <input type="text" id="date-start-d" value="15">~
+            <input type="text" id="date_start_y" value="2020">/
+            <input type="text" id="date_start_m" value="06">/
+            <input type="text" id="date_start_d" value="15">~
         </p>
         <p>
-            <input type="text" id="date-end-y" value="2020">/
-            <input type="text" id="date-end-m" value="06">/
-            <input type="text" id="date-end-d" value="30">
+            <input type="text" id="date_end_y" value="2020">/
+            <input type="text" id="date_end_m" value="06">/
+            <input type="text" id="date_end_d" value="30">
         </p>
         <button id="submit-adjust-dates" onClick="sendAdjustDates()">Submit!</button>
     </div>
@@ -33,6 +33,7 @@
     <!-- グーグルAuthorizeして勝手にカレンダー入力 -->
     <div id="fill-in-dates" style="display:none">
         <p id="adjust-dates-show">日程調整の期間: </p>
+        <button id="submit_your_dates">あなたの日程の情報を送る</button>
         <button id="authorize_button" style="display: none;">Authorize and Automatic Fill in</button>
         <button id="signout_button" style="display: none;">Sign Out</button>
     </div>
@@ -132,8 +133,8 @@
                         var dates_ = dates.split('-');
                         var unix0 = dates_[0];
                         var unix1 = dates_[1];
-                        var date0 = new Date(unix0 * 1000);
-                        var date1 = new Date(unix1 * 1000);
+                        var date0 = new Date(unix0);
+                        var date1 = new Date(unix1);
                         console.log("date0", date0);
                         console.log("date1", date1);
 
@@ -155,13 +156,13 @@
         function sendAdjustDates() {
             const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
             console.log("submit");
-            var y0 = document.getElementById("date-start-y").value;
+            var y0 = document.getElementById("date_start_y").value;
             console.log(y0);
-            var m0 = document.getElementById("date-start-m").value;
-            var d0 = document.getElementById("date-start-d").value;
-            var y1 = document.getElementById("date-end-y").value;
-            var m1 = document.getElementById("date-end-m").value;
-            var d1 = document.getElementById("date-end-d").value;
+            var m0 = document.getElementById("date_start_m").value;
+            var d0 = document.getElementById("date_start_d").value;
+            var y1 = document.getElementById("date_end_y").value;
+            var m1 = document.getElementById("date_end_m").value;
+            var d1 = document.getElementById("date_end_d").value;
             var day0 = y0 + "-" + m0 + "-" + d0 + " " + "00:00:00";
             var day1 = y1 + "-" + m1 + "-" + d1 + " " + "23:59:59";
             console.log(day0);
