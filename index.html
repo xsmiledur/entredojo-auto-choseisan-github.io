@@ -265,9 +265,6 @@
                 });
 
 
-
-
-            const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
             console.log("submit");
             var y0 = document.getElementById("date_start_y").value;
             var m0 = document.getElementById("date_start_m").value;
@@ -285,7 +282,7 @@
             /* 区間を送信する */
             $.ajax({
                 type: 'GET',
-                url: endpoint,
+                url: "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec",
                 dataType: 'jsonp',
                 data: {
                     "id": "",
