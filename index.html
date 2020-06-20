@@ -57,7 +57,7 @@
         //使用時は必ず
         //$('[data-toggle="datepicker"]').datepicker()
         //と書くこと。
-        
+
 
         // Client ID and API key from the Developer Console
         //var CLIENT_ID = '<YOUR_CLIENT_ID>';
@@ -75,7 +75,7 @@
 
         var authorizeButton = document.getElementById('authorize_button');
         var signoutButton = document.getElementById('signout_button');
-        
+
 
 
         //const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
@@ -342,9 +342,13 @@
     </script>
 
     <!--<script async defer src="https://apis.google.com/js/api.js"
-            onload="this.onload=function(){};handleClientLoad()"
+            onload="this.onload=function(){};<!--handleClientLoad()"
             onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>-->
+    <script async defer src="https://apis.google.com/js/api.js"
+            onload="this.onload=function(){};"
+            onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
 </body>
 </html>
 <!-- [END calendar_quickstart] -->
