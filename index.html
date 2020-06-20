@@ -172,11 +172,8 @@
 
                     appendPre("日程調整の結果");
                     for (var i = 0; i < dates.length; ++i) {
-                        var unix0 = new Date(dates[i][0]);
-                        var unix1 = new Date(dates[i][1]);
-                        console.log("unix0", unix0, "unix1", unix1);
-                        var date0 = new Date(parseInt(unix0));
-                        var date1 = new Date(parseInt(unix1));
+                        var date0 = new Date(dates[i][0]);
+                        var date1 = new Date(dates[i][1]);
                         console.log("date0", date0);
                         console.log("date1", date1);
 
