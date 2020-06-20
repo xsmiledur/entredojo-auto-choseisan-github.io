@@ -33,6 +33,8 @@
     <!-- グーグルAuthorizeして勝手にカレンダー入力 -->
     <div id="fill-in-dates" style="display:none">
         <button id="authorize_button" style="display: none;">Authorize and Automatic Fill in</button>
+        <button id="init_client" onClick="initClient()">Automatic Fill in</button>
+
         <button id="signout_button" style="display: none;">Sign Out</button>
     </div>
 
@@ -73,7 +75,7 @@
 
         var authorizeButton = document.getElementById('authorize_button');
         var signoutButton = document.getElementById('signout_button');
-
+        
 
 
         //const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
@@ -170,7 +172,7 @@
                     // ページを切り替える
                     $("#determine-adjust-dates").hide();
                     $("#fill-in-dates").show();
-                    $("#authorize_button").show();
+                    $("#init_client").show();
                     /* GoogleアカウントのAuthorizeをして，結果をSpreadsheetに出力 */
                     //handleClientLoad();
                 }
