@@ -33,7 +33,7 @@
     <!-- グーグルAuthorizeして勝手にカレンダー入力 -->
     <div id="fill-in-dates" style="display:none">
         <button id="authorize_button" style="display: none;">Authorize and Automatic Fill in</button>
-        <button id="init_client" onClick="initClient()">Automatic Fill in</button>
+        <button id="init_client" onClick="handleClientLoad()">Automatic Fill in</button>
 
         <button id="signout_button" style="display: none;">Sign Out</button>
     </div>
@@ -341,14 +341,14 @@
 
     </script>
 
-    <!--<script async defer src="https://apis.google.com/js/api.js"
-            onload="this.onload=function(){};<!--handleClientLoad()"
-            onreadystatechange="if (this.readyState === 'complete') this.onload()">
-    </script>-->
     <script async defer src="https://apis.google.com/js/api.js"
-            onload="this.onload=function(){};"
+            onload="this.onload=function(){};handleClientLoad()"
             onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
+    <!--<script async defer src="https://apis.google.com/js/api.js"
+            onload="this.onload=function(){};"
+            onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>-->
 </body>
 </html>
 <!-- [END calendar_quickstart] -->
