@@ -33,7 +33,7 @@
     <!-- グーグルAuthorizeして勝手にカレンダー入力 -->
     <div id="fill-in-dates" style="display:none">
         <p id="adjust-dates-show">日程調整の期間: </p>
-        <button id="submit_your_dates">あなたの日程の情報を送る</button>
+        <button id="submit_your_dates" onClick="sendYourDates()">あなたの日程の情報を送る</button>
         <button id="authorize_button" style="display: none;">Authorize and Automatic Fill in</button>
         <button id="signout_button" style="display: none;">Sign Out</button>
     </div>
@@ -140,7 +140,7 @@
                         console.log("date0", date0);
                         console.log("date1", date1);
 
-                        var date0str = date0.getFullYear() + "/" + date0.getMonth() + "/" + date1.getDate();
+                        var date0str = date0.getFullYear() + "/" + date0.getMonth() + "/" + date0.getDate();
                         var date1str = date1.getFullYear() + "/" + date1.getMonth() + "/" + date1.getDate();
 
                         $('#adjust-dates-show').text("日程調整の期間: " + date0str + " - " + date1str);
@@ -156,6 +156,115 @@
         }
 
         function sendAdjustDates() {
+            const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
+            console.log("submit");
+            var y0 = document.getElementById("date_start_y").value;
+            var m0 = document.getElementById("date_start_m").value;
+            var d0 = document.getElementById("date_start_d").value;
+            var y1 = document.getElementById("date_end_y").value;
+            var m1 = document.getElementById("date_end_m").value;
+            var d1 = document.getElementById("date_end_d").value;
+            var day0 = new Date(y0, m0, d0, 0, 0, 0);
+            var day1 = new Date(y1, m1, d1, 23, 59, 59);
+            console.log(day0);
+            console.log(day1);
+            var unix0 = day0.getTime();
+            var unix1 = day1.getTime();
+
+            /* 区間を送信する */
+            $.ajax({
+                type: 'GET',
+                url: endpoint,
+                dataType: 'jsonp',
+                data: {
+                    "id": "",
+                    "flg": "1",
+                    "username": "",
+                    "dates": unix0 + "-" + unix1
+                },
+                success: out => {
+                    id = out.id; // idを取ってきた
+                    console.log("generated id: ", id);
+
+                    // ページを切り替える
+                    $("#determine-adjust-dates").hide();
+                    $("#fill-in-dates").show();
+                    $("#init_client").show();
+                    /* GoogleアカウントのAuthorizeをして，結果をSpreadsheetに出力 */
+                    //handleClientLoad();
+                }
+            });
+        }
+
+        function sendYourDates() {
+            // カレンダーから情報を取ってくる
+            gapi.client.calendar.events.list({
+                'calendarId': 'primary',
+                'timeMin': (new Date()).toISOString(),
+                'showDeleted': false,
+                'singleEvents': true,
+                'maxResults': 10,
+                'orderBy': 'startTime'
+            }).then(function (response) {
+                var events = response.result.items;
+                var timestr = "";
+
+                if (events.length > 0) {
+                    for (i = 0; i < events.length; i++) {
+                        var event = events[i];
+                        var when = event.start.dateTime;
+                        var y, m, d, h, min, mm;
+                        var sta, end;
+                        if (!when) {
+                            when = event.start.date;
+                            var ymd = when.split('-');
+                            y = ymd[0];
+                            m = ymd[1];
+                            d = ymd[1];
+                            h = min = mm = 0;
+                            sta = new Date(y, m, d, 0, 0, 0);
+                            end = new Date(y, m, d, 23, 59, 59);
+                        } else {
+                            var str = when.split('T');
+                            var ymd = str[0].split('-');
+                            y = ymd[0];
+                            m = ymd[1];
+                            d = ymd[1];
+                            var staend = str[1].split('+');
+                            var staT = staend[0].split(':');
+                            var endT = staend[1].split(':');
+                            sta = new Date(y, m, d, staT[0], staT[1], staT[2]);
+                            end = new Date(y, m, d, parseInt(staT[0]) + parseInt(endT[0]), parseInt(staT[1]) + parseInt(endT[1]), parseInt(staT[2]));
+                        }
+                        var staunix = sta.getTime();
+                        var endunix = end.getTime();
+                        timestr += staunix + "-" + endunix + ",";
+                    }
+                }
+
+                // datesの区間内でイベントを取っていく
+                const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
+                console.log("search id:", id);
+                $.ajax({
+                    type: 'GET',
+                    url: endpoint,
+                    dataType: 'jsonp',
+                    data: {
+                        "id": String(id),
+                        "flg": "3",
+                        "username": "anonymous",
+                        "dates": timestr
+                    },
+                    success: out => {
+                        dates = out.dates; // 区間を取ってくる
+                        console.log(dates);
+                        alert("get 期間");
+                    }
+                });
+
+
+
+
             const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
             console.log("submit");
             var y0 = document.getElementById("date_start_y").value;
