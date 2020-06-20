@@ -129,6 +129,11 @@
                         /* GoogleアカウントのAuthorizeをして，結果をSpreadsheetに出力 */
                         handleClientLoad();
                     }
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        console.log(XMLHttpRequest); // XMLHttpRequestオブジェクト
+                        console.log(textStatus); // status は、リクエスト結果を表す文字列
+                        console.log(errorThrown); // errorThrown は、例外オブジェクト
+                    },
                 });
 
 
