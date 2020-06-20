@@ -143,8 +143,11 @@
                 // curl -sL https://script.google.com/macros/s/{{scriptId}}/exec?id=1TGGjHvLyYwTh2QryVYjfyx2ZC1_FRvuAXck7Ha69GCg
                 // https://script.google.com/a/g.ecc.u-tokyo.ac.jp/macros/s/AKfycbyhIkY8Q6WVI-UiFf1UM-47gMbcA_i0f5Bc0kwNsWIAAxGE-L9h/exec
 
+                console.log("hello world!");
                 xhr.open('POST', 'https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec', true);
+                console.log("hello world!");
                 xhr.setRequestHeader('content-type', 'application/json');
+                console.log("hello world!");
                 // フォームに入力した値をリクエストとして設定
                 //var request = "{\"id\": \"" + id + "\",\"items\": [{\"id\": 1362911615,\"value\": \"田中太郎\"},{\"id\": 676568096,\"value\": \"L\"},{\"id\": 911411168,\"value\": \"よろしくお願いします！\"}]}";
                 //var request = "{\"id\":\"0\", \"username\":\"yuri\", \"dates\":\"\", \"flg\":\"3\" }";
