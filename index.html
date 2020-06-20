@@ -33,8 +33,6 @@
     <!-- グーグルAuthorizeして勝手にカレンダー入力 -->
     <div id="fill-in-dates" style="display:none">
         <button id="authorize_button" style="display: none;">Authorize and Automatic Fill in</button>
-        <button id="init_client" onClick="handleClientLoad()">Automatic Fill in</button>
-
         <button id="signout_button" style="display: none;">Sign Out</button>
     </div>
 
@@ -286,6 +284,24 @@
                 appendPre('Upcoming events:');
 
                 // datesの区間内でイベントを取っていく
+                const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
+
+                $.ajax({
+                    type: 'GET',
+                    url: endpoint,
+                    dataType: 'jsonp',
+                    data: {
+                        "id": id,
+                        "flg": "2",
+                        "username": "",
+                        "dates": ""
+                    },
+                    success: out => {
+                        dates = out.dates; // 区間を取ってくる
+                        console.log(dates);
+                        alert("get 期間");
+                    }
+                });
 
 
                 if (events.length > 0) {
@@ -301,14 +317,13 @@
                     appendPre('No upcoming events found.');
                 }
 
-                const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
                 $.ajax({
                     type: 'GET',
                     url: endpoint,
                     dataType: 'jsonp',
                     data: {
                         "id": "3",
-                        "flg": "1",
+                        "flg": "3",
                         "username": "yuri",
                         "dates": ""
                     },
