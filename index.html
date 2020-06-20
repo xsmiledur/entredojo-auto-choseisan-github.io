@@ -256,7 +256,7 @@
                             var ymd = when.split('-');
                             y = ymd[0];
                             m = ymd[1];
-                            d = ymd[1];
+                            d = ymd[2];
                             h = min = mm = 0;
                             sta = new Date(y, m, d, 0, 0, 0);
                             end = new Date(y, m, d, 23, 59, 59);
@@ -265,7 +265,7 @@
                             var ymd = str[0].split('-');
                             y = ymd[0];
                             m = ymd[1];
-                            d = ymd[1];
+                            d = ymd[2];
                             var staend = str[1].split('+');
                             var staT = staend[0].split(':');
                             var endT = staend[1].split(':');
