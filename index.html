@@ -242,27 +242,28 @@
                         console.log("unix", staunix, endunix);
                         timestr += staunix + "-" + endunix + ",";
                     }
-                });
+                }
+            });
 
-                // datesの区間内でイベントを取っていく
-                const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
-                console.log("search id:", id);
-                $.ajax({
-                    type: 'GET',
-                    url: endpoint,
-                    dataType: 'jsonp',
-                    data: {
-                        "id": String(id),
-                        "flg": "3",
-                        "username": "anonymous",
-                        "dates": timestr
-                    },
-                    success: out => {
-                        dates = out.dates; // 区間を取ってくる
-                        console.log(dates);
-                        alert("get 期間");
-                    }
-                });
+            // datesの区間内でイベントを取っていく
+            const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
+            console.log("search id:", id);
+            $.ajax({
+                type: 'GET',
+                url: endpoint,
+                dataType: 'jsonp',
+                data: {
+                    "id": String(id),
+                    "flg": "3",
+                    "username": "anonymous",
+                    "dates": timestr
+                },
+                success: out => {
+                    dates = out.dates; // 区間を取ってくる
+                    console.log(dates);
+                    alert("get 期間");
+                }
+            });
 
 
             console.log("submit");
