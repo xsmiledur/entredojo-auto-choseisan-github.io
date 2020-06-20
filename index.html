@@ -140,11 +140,11 @@
 
                 const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
                 $.ajax({
-                    type: 'POST',
+                    type: 'GET',
                     url: endpoint,
                     dataType: 'jsonp',
                     data: {
-                        text: 'Hi,There!'
+                        id: '3'
                     },
                     success: out => {
                         alert(out.message);
