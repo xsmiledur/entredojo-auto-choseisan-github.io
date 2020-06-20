@@ -226,7 +226,7 @@
                     console.log("generated id: ", id);
 
                     // ページを切り替える
-                    window.location.href = "https://xsmiledur.github.io/entredojo-auto-choseisan-github.io/?id=" + String(id) + "&result=true";
+                    window.location.href = "https://xsmiledur.github.io/entredojo-auto-choseisan-github.io/?id=" + String(id);
 
                 }
             });
@@ -330,12 +330,9 @@
                         id = out.id; // idを取ってきた
                         console.log("generated id: ", id);
 
-                        // ページを切り替える
-                        $("#determine_adjust_dates").hide();
-                        $("#fill_in_dates").show();
-                        $("#init_client").show();
-                        /* GoogleアカウントのAuthorizeをして，結果をSpreadsheetに出力 */
-                        //handleClientLoad();
+
+                        window.location.href = "https://xsmiledur.github.io/entredojo-auto-choseisan-github.io/?id=" + String(id) + "&result=true";
+
                     }
                 });
 
