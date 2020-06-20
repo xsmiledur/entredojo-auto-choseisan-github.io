@@ -236,8 +236,10 @@
                             sta = new Date(y, m, d, staT[0], staT[1], staT[2]);
                             end = new Date(y, m, d, parseInt(staT[0]) + parseInt(endT[0]), parseInt(staT[1]) + parseInt(endT[1]), parseInt(staT[2]));
                         }
+                        console.log("sta", sta, "end", end);
                         var staunix = sta.getTime();
                         var endunix = end.getTime();
+                        console.log("unix", staunix, endunix);
                         timestr += staunix + "-" + endunix + ",";
                     }
                 }
