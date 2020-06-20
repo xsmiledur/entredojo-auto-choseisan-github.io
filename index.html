@@ -119,7 +119,7 @@
                     url: endpoint,
                     dataType: 'jsonp',
                     data: {
-                        "id": id,
+                        "id": String(id),
                         "flg": "2",
                         "username": "",
                         "dates": ""
@@ -128,12 +128,12 @@
                         dates = out.dates;
                         /* GoogleアカウントのAuthorizeをして，結果をSpreadsheetに出力 */
                         handleClientLoad();
-                    }
+                    },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         console.log(XMLHttpRequest); // XMLHttpRequestオブジェクト
                         console.log(textStatus); // status は、リクエスト結果を表す文字列
                         console.log(errorThrown); // errorThrown は、例外オブジェクト
-                    },
+                    }
                 });
 
 
@@ -306,6 +306,11 @@
                         dates = out.dates; // 区間を取ってくる
                         console.log(dates);
                         alert("get 期間");
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        console.log(XMLHttpRequest); // XMLHttpRequestオブジェクト
+                        console.log(textStatus); // status は、リクエスト結果を表す文字列
+                        console.log(errorThrown); // errorThrown は、例外オブジェクト
                     }
                 });
 
