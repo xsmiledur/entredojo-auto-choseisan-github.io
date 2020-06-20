@@ -5,24 +5,29 @@
     <title>Google Calendar API Quickstart</title>
     <meta charset="utf-8" />
 
-    <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">-->
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-        $(function () {
-            $("#datepicker").datepicker();
-        });
-    </script>
+    <link rel="stylesheet" href="https://fengyuanchen.github.io/datepicker/css/datepicker.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://fengyuanchen.github.io/datepicker/js/datepicker.js"></script>
+    <script src="https://fengyuanchen.github.io/datepicker/js/datepicker.ja-JP.js"></script>
 
 </head>
 <body>
     <p>Google Calendar API Quickstart</p>
 
-    <p>Date: <input type="text" id="datepicker"></p>
-
     <!-- 日程調整の区間を決定 カレンダー入力 -->
     <div id="determine-adjust-dates" style="display:none">
+        <p>日程調整の期間を決定してください</p>
+        <p>
+            <input type="text" data-toggle="date-start-y">/
+            <input type="text" data-toggle="date-start-m">/
+            <input type="text" data-toggle="date-start-d">~
+        </p>
+        <p>
+            <input type="text" data-toggle="date-end-y">
+            <input type="text" data-toggle="date-end-m">
+            <input type="text" data-toggle="date-end-d">
+        </p>
+        <button id="submit-adjust-dates" onclick="sendAdjustDates">Submit!</button>
     </div>
 
 
@@ -45,8 +50,13 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
     <script type="text/javascript">
+        //現在の日付を習得しておく
+        var today = new Date();
 
-
+        //使用時は必ず
+        //$('[data-toggle="datepicker"]').datepicker()
+        //と書くこと。
+        
 
         // Client ID and API key from the Developer Console
         //var CLIENT_ID = '<YOUR_CLIENT_ID>';
@@ -93,6 +103,7 @@
             console.log("id nothing");
             flg = 1;
             $("#determine-adjust-dates").show();
+            //document.getElementById('submit-adjust-dates').onclick(sendAdjustDates);
         } else {
             var result = getParam('result');
             if (result == "true" || result == true) {
@@ -104,7 +115,7 @@
                     dataType: 'jsonp',
                     data: {
                         "id": id,
-                        "flg": "1",
+                        "flg": "2",
                         "username": "",
                         "dates": ""
                     },
@@ -124,6 +135,36 @@
             }
         }
 
+        function sendAdjustDates() {
+            console.log("submit");
+            var y0 = document.getElementById("date-start-y");
+            var m0 = document.getElementById("date-start-m");
+            var d0 = document.getElementById("date-start-d");
+            var y1 = document.getElementById("date-end-y");
+            var m1 = document.getElementById("date-end-m");
+            var d1 = document.getElementById("date-end-d");
+            var unix0 = Date.parse(y0 + "-" + m0 + "-" + d0 + " " + "00:00:00");
+            var unix1 = Date.parse(y1 + "-" + m1 + "-" + d1 + " " + "23:59:59");
+
+            /* idで区間を取ってくる */
+            $.ajax({
+                type: 'GET',
+                url: endpoint,
+                dataType: 'jsonp',
+                data: {
+                    "id": "",
+                    "flg": "1",
+                    "username": "",
+                    "dates": unix0 + "-" + unix1
+                },
+                success: out => {
+                    id = out.id; // idを取ってきた
+                    console.log("generated id: ", id);
+                    /* GoogleアカウントのAuthorizeをして，結果をSpreadsheetに出力 */
+                    //handleClientLoad();
+                }
+            });
+        }
 
         /**
          * Get the URL parameter value
