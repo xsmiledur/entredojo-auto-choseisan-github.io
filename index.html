@@ -318,20 +318,20 @@
                     appendPre('No upcoming events found.');
                 }
 
-                $.ajax({
-                    type: 'GET',
-                    url: endpoint,
-                    dataType: 'jsonp',
-                    data: {
-                        "id": "3",
-                        "flg": "3",
-                        "username": "yuri",
-                        "dates": ""
-                    },
-                    success: out => {
-                        alert(out.message);
-                    }
-                });
+                //$.ajax({
+                //    type: 'GET',
+                //    url: endpoint,
+                //    dataType: 'jsonp',
+                //    data: {
+                //        "id": "3",
+                //        "flg": "3",
+                //        "username": "yuri",
+                //        "dates": ""
+                //    },
+                //    success: out => {
+                //        alert(out.message);
+                //    }
+                //});
 
                 // HTTP Request
                 // curl -sL https://script.google.com/macros/s/{{scriptId}}/exec?id=1TGGjHvLyYwTh2QryVYjfyx2ZC1_FRvuAXck7Ha69GCg
