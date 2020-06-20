@@ -243,66 +243,68 @@
                         timestr += staunix + "-" + endunix + ",";
                     }
                 }
+
+                // datesの区間内でイベントを取っていく
+                const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
+                console.log("search id:", id);
+                $.ajax({
+                    type: 'GET',
+                    url: endpoint,
+                    dataType: 'jsonp',
+                    data: {
+                        "id": String(id),
+                        "flg": "3",
+                        "username": "anonymous",
+                        "dates": timestr
+                    },
+                    success: out => {
+                        dates = out.dates; // 区間を取ってくる
+                        console.log(dates);
+                        alert("get 期間");
+                    }
+                });
+
+
+                console.log("submit");
+                var y0 = document.getElementById("date_start_y").value;
+                var m0 = document.getElementById("date_start_m").value;
+                var d0 = document.getElementById("date_start_d").value;
+                var y1 = document.getElementById("date_end_y").value;
+                var m1 = document.getElementById("date_end_m").value;
+                var d1 = document.getElementById("date_end_d").value;
+                var day0 = new Date(y0, m0, d0, 0, 0, 0);
+                var day1 = new Date(y1, m1, d1, 23, 59, 59);
+                console.log(day0);
+                console.log(day1);
+                var unix0 = day0.getTime();
+                var unix1 = day1.getTime();
+
+                /* 区間を送信する */
+                $.ajax({
+                    type: 'GET',
+                    url: "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec",
+                    dataType: 'jsonp',
+                    data: {
+                        "id": "",
+                        "flg": "1",
+                        "username": "",
+                        "dates": unix0 + "-" + unix1
+                    },
+                    success: out => {
+                        id = out.id; // idを取ってきた
+                        console.log("generated id: ", id);
+
+                        // ページを切り替える
+                        $("#determine-adjust-dates").hide();
+                        $("#fill-in-dates").show();
+                        $("#init_client").show();
+                        /* GoogleアカウントのAuthorizeをして，結果をSpreadsheetに出力 */
+                        //handleClientLoad();
+                    }
+                });
+
             });
 
-            // datesの区間内でイベントを取っていく
-            const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
-            console.log("search id:", id);
-            $.ajax({
-                type: 'GET',
-                url: endpoint,
-                dataType: 'jsonp',
-                data: {
-                    "id": String(id),
-                    "flg": "3",
-                    "username": "anonymous",
-                    "dates": timestr
-                },
-                success: out => {
-                    dates = out.dates; // 区間を取ってくる
-                    console.log(dates);
-                    alert("get 期間");
-                }
-            });
-
-
-            console.log("submit");
-            var y0 = document.getElementById("date_start_y").value;
-            var m0 = document.getElementById("date_start_m").value;
-            var d0 = document.getElementById("date_start_d").value;
-            var y1 = document.getElementById("date_end_y").value;
-            var m1 = document.getElementById("date_end_m").value;
-            var d1 = document.getElementById("date_end_d").value;
-            var day0 = new Date(y0, m0, d0, 0, 0, 0);
-            var day1 = new Date(y1, m1, d1, 23, 59, 59);
-            console.log(day0);
-            console.log(day1);
-            var unix0 = day0.getTime();
-            var unix1 = day1.getTime();
-
-            /* 区間を送信する */
-            $.ajax({
-                type: 'GET',
-                url: "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec",
-                dataType: 'jsonp',
-                data: {
-                    "id": "",
-                    "flg": "1",
-                    "username": "",
-                    "dates": unix0 + "-" + unix1
-                },
-                success: out => {
-                    id = out.id; // idを取ってきた
-                    console.log("generated id: ", id);
-
-                    // ページを切り替える
-                    $("#determine-adjust-dates").hide();
-                    $("#fill-in-dates").show();
-                    $("#init_client").show();
-                    /* GoogleアカウントのAuthorizeをして，結果をSpreadsheetに出力 */
-                    //handleClientLoad();
-                }
-            });
         }
 
         /**
@@ -411,27 +413,6 @@
                 var events = response.result.items;
                 appendPre('Upcoming events:');
 
-                // datesの区間内でイベントを取っていく
-                const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
-                console.log("search id:", id);
-                $.ajax({
-                    type: 'GET',
-                    url: endpoint,
-                    dataType: 'jsonp',
-                    data: {
-                        "id": String(id),
-                        "flg": "2",
-                        "username": "",
-                        "dates": ""
-                    },
-                    success: out => {
-                        dates = out.dates; // 区間を取ってくる
-                        console.log(dates);
-                        alert("get 期間");
-                    }
-                });
-
-
                 if (events.length > 0) {
                     for (i = 0; i < events.length; i++) {
                         var event = events[i];
@@ -444,41 +425,6 @@
                 } else {
                     appendPre('No upcoming events found.');
                 }
-
-                //$.ajax({
-                //    type: 'GET',
-                //    url: endpoint,
-                //    dataType: 'jsonp',
-                //    data: {
-                //        "id": "3",
-                //        "flg": "3",
-                //        "username": "yuri",
-                //        "dates": ""
-                //    },
-                //    success: out => {
-                //        alert(out.message);
-                //    }
-                //});
-
-                // HTTP Request
-                // curl -sL https://script.google.com/macros/s/{{scriptId}}/exec?id=1TGGjHvLyYwTh2QryVYjfyx2ZC1_FRvuAXck7Ha69GCg
-                // curl -X POST -H "Content-Type: application/json" -d "{\"id\": \"1TGGjHvLyYwTh2QryVYjfyx2ZC1_FRvuAXck7Ha69GCg\",\"items\": [{\"id\": 1362911615,\"value\": \"田中太郎\"},{\"id\": 676568096,\"value\": \"L\"},{\"id\": 911411168,\"value\": \"よろしくお願いします！\"}]}" -sL https://script.google.com/macros/s/{{scriptId}}/exec
-                //var xhr = new XMLHttpRequest();
-
-                //console.log("hello world!");
-                //xhr.open('POST', 'https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec', true);
-                //console.log("hello world!");
-                //xhr.setRequestHeader('content-type', 'application/json');
-                //console.log("hello world!");
-                //// フォームに入力した値をリクエストとして設定
-                ////var request = "{\"id\": \"" + id + "\",\"items\": [{\"id\": 1362911615,\"value\": \"田中太郎\"},{\"id\": 676568096,\"value\": \"L\"},{\"id\": 911411168,\"value\": \"よろしくお願いします！\"}]}";
-                ////var request = "{\"id\":\"0\", \"username\":\"yuri\", \"dates\":\"\", \"flg\":\"3\" }";
-                //var request = "{\"id\":\"3\", \"flg\":\"1\" }";
-                //xhr.send(request);
-                //console.log("hello world!");
-
-                // MyProject:
-                // https://script.google.com/a/g.ecc.u-tokyo.ac.jp/macros/s/AKfycbyhIkY8Q6WVI-UiFf1UM-47gMbcA_i0f5Bc0kwNsWIAAxGE-L9h/exec
             });
         }
 
