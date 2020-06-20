@@ -139,33 +139,15 @@
                 // curl -sL https://script.google.com/macros/s/{{scriptId}}/exec?id=1TGGjHvLyYwTh2QryVYjfyx2ZC1_FRvuAXck7Ha69GCg
                 // curl -X POST -H "Content-Type: application/json" -d "{\"id\": \"1TGGjHvLyYwTh2QryVYjfyx2ZC1_FRvuAXck7Ha69GCg\",\"items\": [{\"id\": 1362911615,\"value\": \"田中太郎\"},{\"id\": 676568096,\"value\": \"L\"},{\"id\": 911411168,\"value\": \"よろしくお願いします！\"}]}" -sL https://script.google.com/macros/s/{{scriptId}}/exec
                 var xhr = new XMLHttpRequest();
-                var id = "1FAIpQLScOZ_Ed6f9qhj-CW4EtQ1iaGpcIKWsckaNcwmuGtEK9I-_50g";
-
-                /* まず各フォームのカラムのIDを取ってくる */
-                xhr.open("GET", "https://script.google.com/a/g.ecc.u-tokyo.ac.jp/macros/s/AKfycbyhIkY8Q6WVI-UiFf1UM-47gMbcA_i0f5Bc0kwNsWIAAxGE-L9h", true);
-                xhr.onload = function (e) {
-                    if (xhr.readyState === 4) {
-                        if (xhr.status === 200) {
-                            console.log("msg:");
-                            console.log(xhr.responseText);
-                        } else {
-                            console.log("error:");
-                            console.error(xhr.statusText);
-                        }
-                    }
-                };
-                xhr.onerror = function (e) {
-                    console.error(xhr.statusText);
-                };
-                xhr.send(null); 
 
                 // curl -sL https://script.google.com/macros/s/{{scriptId}}/exec?id=1TGGjHvLyYwTh2QryVYjfyx2ZC1_FRvuAXck7Ha69GCg
                 // https://script.google.com/a/g.ecc.u-tokyo.ac.jp/macros/s/AKfycbyhIkY8Q6WVI-UiFf1UM-47gMbcA_i0f5Bc0kwNsWIAAxGE-L9h/exec
 
-                xhr.open('POST', 'https://script.google.com/a/g.ecc.u-tokyo.ac.jp/macros/s/AKfycbyhIkY8Q6WVI-UiFf1UM-47gMbcA_i0f5Bc0kwNsWIAAxGE-L9h', true);
+                xhr.open('POST', 'https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec', true);
                 xhr.setRequestHeader('content-type', 'application/json');
                 // フォームに入力した値をリクエストとして設定
-                var request = "{\"id\": \"" + id + "\",\"items\": [{\"id\": 1362911615,\"value\": \"田中太郎\"},{\"id\": 676568096,\"value\": \"L\"},{\"id\": 911411168,\"value\": \"よろしくお願いします！\"}]}";
+                //var request = "{\"id\": \"" + id + "\",\"items\": [{\"id\": 1362911615,\"value\": \"田中太郎\"},{\"id\": 676568096,\"value\": \"L\"},{\"id\": 911411168,\"value\": \"よろしくお願いします！\"}]}";
+                var request = "{\"id\":\"0\", \"username\":\"yuri\", \"dates\":\"\", \"flg\":\"3\" }";
                 xhr.send(request);
 
                 // MyProject:
