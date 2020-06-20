@@ -170,6 +170,7 @@
                     // ページを切り替える
                     $("#determine-adjust-dates").hide();
                     $("#fill-in-dates").show();
+                    $("#authorize_button").show();
                     /* GoogleアカウントのAuthorizeをして，結果をSpreadsheetに出力 */
                     //handleClientLoad();
                 }
@@ -297,9 +298,6 @@
                 } else {
                     appendPre('No upcoming events found.');
                 }
-
-
-
 
                 const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
                 $.ajax({
