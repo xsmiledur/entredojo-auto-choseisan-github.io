@@ -453,7 +453,7 @@
                 'orderBy': 'startTime'
             }).then(function (response) {
                 var events = response.result.items;
-                appendPre('Upcoming events:');
+                appendPre('あなたのイベント');
 
                 if (events.length > 0) {
                     for (i = 0; i < events.length; i++) {
@@ -465,7 +465,7 @@
                         appendPre(event.summary + ' (' + when + ')')
                     }
                 } else {
-                    appendPre('No upcoming events found.');
+                    appendPre('あなたの予定されたイベントはありません');
                 }
             });
         }
