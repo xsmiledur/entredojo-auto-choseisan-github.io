@@ -109,16 +109,20 @@
             <p>
                 <input id="copy_id" type="text" value="https://xsmiledur.github.io/entredojo-auto-choseisan-github.io/?id="><button onClick="copyToClipboard()">日程調整リンクをコピーする</button>
             </p>
-            <p><a href="#" id="submit_your_dates" class="btn-sticky" onClick="sendYourDates()">あなたの日程の情報を送る</a></p>
             <p><a href="#" id="authorize_button" class="btn-sticky" style="display: none;">UTokyo Google Accountでログインする</a></p>
+
+            <p><a href="#" id="submit_your_dates" class="btn-sticky" onClick="sendYourDates()">あなたの日程の情報を送る</a></p>
+            <pre id="content" style="white-space: pre-wrap;"></pre>
             <p><a href="#" id="signout_button" class="btn-sticky" style="display: none;">Sign Out</a></p>
+
+
+
         </div>
 
         <!-- 日程調整の結果を表示 -->
         <div id="result" style="display:none">
 
         </div>
-        <pre id="content" style="white-space: pre-wrap;"></pre>
 
 
     </div>
@@ -526,7 +530,7 @@
                 'orderBy': 'startTime'
             }).then(function (response) {
                 var events = response.result.items;
-                appendPre('あなたのイベント');
+                appendPre('<p>あなたのイベント</p>');
 
                 if (events.length > 0) {
                     for (i = 0; i < events.length; i++) {
@@ -535,10 +539,10 @@
                         if (!when) {
                             when = event.start.date;
                         }
-                        appendPre(event.summary + ' (' + when + ')')
+                        appendPre('<p>' + event.summary + ' (' + when + ')</p>')
                     }
                 } else {
-                    appendPre('あなたの予定されたイベントはありません');
+                    appendPre('<p>あなたの予定されたイベントはありません</p>');
                 }
             });
         }
