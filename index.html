@@ -98,26 +98,26 @@
             <p>日程調整の期間を決めてください</p>
             <!--<input type="text" id="datepicker">-->
             <p>
-                <input type="date" id="date_start" value="" /> ~ <input type="date" id="date_end" value=""/><br/>
+                <input type="date" id="date_start" value="" /> ~ <input type="date" id="date_end" value="" /><br />
                 <!--<input type="text" id="date_start_y" value="2020">/
-                <input type="text" id="date_start_m" value="06">/
-                <input type="text" id="date_start_d" value="15">~-->
+        <input type="text" id="date_start_m" value="06">/
+        <input type="text" id="date_start_d" value="15">~-->
             </p>
             <p>
                 <!--<input type="text" id="date_end_y" value="2020">/
-                <input type="text" id="date_end_m" value="06">/
-                <input type="text" id="date_end_d" value="30">-->
+        <input type="text" id="date_end_m" value="06">/
+        <input type="text" id="date_end_d" value="30">-->日程調整リンクをコピーする
             </p>
-            <a href="#" id="submit-adjust-dates" class="btn-sticky" onClick="sendAdjustDates()">決定</a>
+            <a href="#" id="submit_adjust_dates" class="btn-sticky" onClick="sendAdjustDates()">決定</a>
         </div>
 
         <!-- グーグルAuthorizeして勝手にカレンダー入力 -->
         <div id="fill_in_dates" style="display:none">
-            <p id="adjust-dates-show">日程調整の期間: </p>
-            <p id="show_id"></p>
-            <button id="submit_your_dates" onClick="sendYourDates()">あなたの日程の情報を送る</button>
-            <button id="authorize_button" style="display: none;">Authorize and Automatic Fill in</button>
-            <button id="signout_button" style="display: none;">Sign Out</button>
+            <p id="adjust_dates_show">日程調整の期間: </p>
+            <input id="copy_id" type="text" value="https://xsmiledur.github.io/entredojo-auto-choseisan-github.io/?id="><button onClick="copyToClipboard()">日程調整リンクをコピーする</button>
+            <a href="#" id="submit_your_dates" class="btn-sticky" onClick="sendYourDates()">あなたの日程の情報を送る</a>
+            <a href="#" id="authorize_button" class="btn-sticky" style="display: none;">UTokyo Google Accountでログインする</a>
+            <a href="#" id="signout_button" class="btn-sticky" style="display: none;">Sign Out</a>
         </div>
 
         <!-- 日程調整の結果を表示 -->
@@ -138,7 +138,6 @@
             crossorigin="anonymous"></script>
     <script type="text/javascript">
         //現在の日付を習得しておく
-        document.getElementById("date_start").value = "2020-06-22";
         {
             var today = new Date();
             var year = today.getFullYear();
@@ -199,7 +198,7 @@
             console.log("id nothing");
             flg = 1;
             $("#determine_adjust_dates").show();
-            //document.getElementById('submit-adjust-dates').onclick(sendAdjustDates);
+            //document.getElementById('submit_adjust_dates').onclick(sendAdjustDates);
         } else {
             var result = getParam('result');
             if (result == "true" || result == true) {
@@ -238,8 +237,8 @@
 
                         var date0str = date0.getFullYear() + "/" + date0.getMonth() + "/" + date0.getDate();
                         var date1str = date1.getFullYear() + "/" + date1.getMonth() + "/" + date1.getDate();
-                        $('#adjust-dates-show').text("日程調整の期間: " + date0str + " - " + date1str);
-                        $('#show_id').text(String(id));
+                        $('#adjust_dates_show').text("日程調整の期間: " + date0str + " - " + date1str);
+                        $('#copy_id').value("https://xsmiledur.github.io/entredojo-auto-choseisan-github.io/?id=" + String(id));
                     },
                 });
 
@@ -287,7 +286,19 @@
                 }
             });
         }
+        function copyToClipboard() {
+            // コピー対象をJavaScript上で変数として定義する
+            var copyTarget = document.getElementById("copyTarget");
 
+            // コピー対象のテキストを選択する
+            copyTarget.select();
+
+            // 選択しているテキストをクリップボードにコピーする
+            document.execCommand("Copy");
+
+            // コピーをお知らせする
+            alert("コピーできました！ : " + copyTarget.value);
+        }
         function formatting(d) {
             var y = d.getFullYear();
             var month = d.getMonth();
@@ -315,7 +326,7 @@
             var date1 = document.getElementById("date_end").value;
             var y0, m0, d0, y1, m1, d1;
             var arr0 = date0.split('-');
-            var arr1 = date0.split('-');
+            var arr1 = date1.split('-');
             y0 = arr0[0]; m0 = arr0[1]; d0 = arr0[2];
             y1 = arr1[0]; m1 = arr1[1]; d1 = arr1[2];
             var day0 = new Date(parseInt(y0), parseInt(m0), parseInt(d0), 0, 0, 0);
