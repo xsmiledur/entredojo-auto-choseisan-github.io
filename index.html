@@ -99,14 +99,6 @@
             <!--<input type="text" id="datepicker">-->
             <p>
                 <input type="date" id="date_start" value="" /> ~ <input type="date" id="date_end" value="" /><br />
-                <!--<input type="text" id="date_start_y" value="2020">/
-        <input type="text" id="date_start_m" value="06">/
-        <input type="text" id="date_start_d" value="15">~-->
-            </p>
-            <p>
-                <!--<input type="text" id="date_end_y" value="2020">/
-        <input type="text" id="date_end_m" value="06">/
-        <input type="text" id="date_end_d" value="30">-->日程調整リンクをコピーする
             </p>
             <a href="#" id="submit_adjust_dates" class="btn-sticky" onClick="sendAdjustDates()">決定</a>
         </div>
@@ -114,10 +106,12 @@
         <!-- グーグルAuthorizeして勝手にカレンダー入力 -->
         <div id="fill_in_dates" style="display:none">
             <p id="adjust_dates_show">日程調整の期間: </p>
-            <input id="copy_id" type="text" value="https://xsmiledur.github.io/entredojo-auto-choseisan-github.io/?id="><button onClick="copyToClipboard()">日程調整リンクをコピーする</button>
-            <a href="#" id="submit_your_dates" class="btn-sticky" onClick="sendYourDates()">あなたの日程の情報を送る</a>
-            <a href="#" id="authorize_button" class="btn-sticky" style="display: none;">UTokyo Google Accountでログインする</a>
-            <a href="#" id="signout_button" class="btn-sticky" style="display: none;">Sign Out</a>
+            <p>
+                <input id="copy_id" type="text" value="https://xsmiledur.github.io/entredojo-auto-choseisan-github.io/?id="><button onClick="copyToClipboard()">日程調整リンクをコピーする</button>
+            </p>
+            <p><a href="#" id="submit_your_dates" class="btn-sticky" onClick="sendYourDates()">あなたの日程の情報を送る</a></p>
+            <p><a href="#" id="authorize_button" class="btn-sticky" style="display: none;">UTokyo Google Accountでログインする</a></p>
+            <p><a href="#" id="signout_button" class="btn-sticky" style="display: none;">Sign Out</a></p>
         </div>
 
         <!-- 日程調整の結果を表示 -->
