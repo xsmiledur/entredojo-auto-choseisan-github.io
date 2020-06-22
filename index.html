@@ -123,7 +123,7 @@
         <div id="fill_in_dates" style="display:none">
             <p id="adjust_dates_show">日程調整の期間: </p>
             <p>
-                <input id="copy_id" type="text" class="btn-right-radius" value="https://xsmiledur.github.io/entredojo-auto-choseisan-github.io/?id="><button onClick="copyToClipboard()">日程調整リンクをコピーする</button>
+                <input id="copy_id" type="text" value="https://xsmiledur.github.io/entredojo-auto-choseisan-github.io/?id="><button class="btn-right-radius" onClick="copyToClipboard()">日程調整リンクをコピーする</button>
             </p>
             <p><a href="#" id="authorize_button" class="btn-sticky" style="display: none;">UTokyo Google Accountでログインする</a></p>
 
@@ -294,7 +294,7 @@
                             var p1 = document.createElement("p");
                             p1.innerHTML = "";
                             var p2 = document.createElement("h2");
-                            p2.innerHTML = "結果: ";
+                            p2.innerHTML = "日程調整の結果はこちらです↓";
                             res.appendChild(p0);
                             res.appendChild(p1);
                             res.appendChild(p2);
@@ -559,7 +559,7 @@
                 'orderBy': 'startTime'
             }).then(function (response) {
                 var events = response.result.items;
-                appendPre('あなたのイベント');
+                //appendPre('あなたのイベント');
 
                 if (events.length > 0) {
                     for (i = 0; i < events.length; i++) {
