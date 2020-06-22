@@ -118,6 +118,7 @@
         <div id="result" style="display:none">
 
         </div>
+        <pre id="content" style="white-space: pre-wrap;"></pre>
 
 
     </div>
@@ -125,8 +126,6 @@
 
 
     <!--Add buttons to initiate auth sequence and sign out-->
-
-    <pre id="content" style="white-space: pre-wrap;"></pre>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
@@ -232,7 +231,8 @@
                         var date0str = date0.getFullYear() + "/" + date0.getMonth() + "/" + date0.getDate();
                         var date1str = date1.getFullYear() + "/" + date1.getMonth() + "/" + date1.getDate();
                         $('#adjust_dates_show').text("日程調整の期間: " + date0str + " - " + date1str);
-                        $('#copy_id').value("https://xsmiledur.github.io/entredojo-auto-choseisan-github.io/?id=" + String(id));
+                        console.log("setid", id);
+                        $('#copy_id').value = "https://xsmiledur.github.io/entredojo-auto-choseisan-github.io/?id=" + String(id);
                     },
                 });
 
