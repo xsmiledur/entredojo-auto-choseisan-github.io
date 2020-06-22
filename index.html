@@ -121,15 +121,24 @@
 
         <!-- グーグルAuthorizeして勝手にカレンダー入力 -->
         <div id="fill_in_dates" style="display:none">
-            <p id="adjust_dates_show">日程調整の期間: </p>
+            <div>
+                <!--<p id="adjust_dates_show" style="float:left;">日程調整の期間: </p>--><!--<a href="#" class="btn-right-radius" onClick="copyToClipboard()" style="float:left;">Copy link</a>-->
+                <p id="adjust_dates_show">日程調整の期間: </p>
+                <a href="#" class="btn-right-radius" onClick="copyToClipboard()"> Copy link</a>
+            </div>
+            <br />
             <p>
-                <input id="copy_id" type="text" value="https://xsmiledur.github.io/entredojo-auto-choseisan-github.io/?id="><button class="btn-right-radius" onClick="copyToClipboard()">日程調整リンクをコピーする</button>
+                <input id="copy_id" type="text" value="https://xsmiledur.github.io/entredojo-auto-choseisan-github.io/?id=" style="display:none;">
             </p>
             <p><a href="#" id="authorize_button" class="btn-sticky" style="display: none;">UTokyo Google Accountでログインする</a></p>
 
-            <div id="content"></div>
             <p><a href="#" id="submit_your_dates" class="btn-sticky" onClick="sendYourDates()">あなたの日程の情報を送る</a></p>
-            <p><a href="#" id="signout_button" class="btn-right-radius" style="display: none; text-align: right;">Sign Out</a></p>
+
+            <div id="content"></div>
+            <!--            <a href="#" id="signout_button" class="btn-right-radius" style="display: none; text-align:right;">Sign Out</a>-->
+            <br />
+
+            <p style="text-align:right"><a href="#" id="signout_button" class="btn-right-radius" style="text-align:right; color:gray">Sign Out</a></p>
 
         </div>
 
@@ -313,9 +322,10 @@
         }
         function copyToClipboard() {
             // コピー対象をJavaScript上で変数として定義する
-            var copyTarget = document.getElementById("copyTarget");
+            var copyTarget = document.getElementById("copy_id");
 
             // コピー対象のテキストを選択する
+            //var text = copyTarget.val;
             copyTarget.select();
 
             // 選択しているテキストをクリップボードにコピーする
