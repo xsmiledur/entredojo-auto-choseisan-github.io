@@ -5,43 +5,129 @@
     <title>Google Calendar API Quickstart</title>
     <meta charset="utf-8" />
 
-    <link rel="stylesheet" href="https://fengyuanchen.github.io/datepicker/css/datepicker.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://fengyuanchen.github.io/datepicker/js/datepicker.js"></script>
-    <script src="https://fengyuanchen.github.io/datepicker/js/datepicker.ja-JP.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
+
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        .bg {
+            animation: slide 3s ease-in-out infinite alternate;
+            background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
+            bottom: 0;
+            left: -50%;
+            opacity: .5;
+            position: fixed;
+            right: -50%;
+            top: 0;
+            z-index: -1;
+        }
+
+        .bg2 {
+            animation-direction: alternate-reverse;
+            animation-duration: 4s;
+        }
+
+        .bg3 {
+            animation-duration: 5s;
+        }
+
+        .content {
+            background-color: rgba(255,255,255,.8);
+            border-radius: .25em;
+            box-shadow: 0 0 .25em rgba(0,0,0,.25);
+            box-sizing: border-box;
+            left: 50%;
+            padding: 10vmin;
+            position: fixed;
+            text-align: center;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        h1 {
+            font-family: monospace;
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(-25%);
+            }
+
+            100% {
+                transform: translateX(25%);
+            }
+        }
+
+        .btn-sticky {
+            display: inline-block;
+            padding: 0.5em 1em;
+            text-decoration: none;
+            background: #f7f7f7;
+            border-left: solid 6px #ff7c5c; /*左線*/
+            color: #ff7c5c; /*文字色*/
+            font-weight: bold;
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+        }
+
+            .btn-sticky:active {
+                box-shadow: inset 0 0 2px rgba(128, 128, 128, 0.1);
+                transform: translateY(2px);
+            }
+    </style>
 </head>
 <body>
-    <p>Google Calendar API Quickstart</p>
 
-    <!-- 日程調整の区間を決定 カレンダー入力 -->
-    <div id="determine_adjust_dates" style="display:none">
-        <p>日程調整の期間を決定してください</p>
-        <p>
-            <input type="text" id="date_start_y" value="2020">/
-            <input type="text" id="date_start_m" value="06">/
-            <input type="text" id="date_start_d" value="15">~
-        </p>
-        <p>
-            <input type="text" id="date_end_y" value="2020">/
-            <input type="text" id="date_end_m" value="06">/
-            <input type="text" id="date_end_d" value="30">
-        </p>
-        <button id="submit-adjust-dates" onClick="sendAdjustDates()">Submit!</button>
+
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+    <div class="content">
+        <h1>Ukaray</h1>
+
+        <!-- 日程調整の区間を決定 カレンダー入力 -->
+        <div id="determine_adjust_dates" style="display:none; text-align:center">
+            <p>日程調整の期間を決めてください</p>
+            <!--<input type="text" id="datepicker">-->
+            <p>
+                <input type="date" id="date_start" value="" /> ~ <input type="date" id="date_end" value=""/><br/>
+                <!--<input type="text" id="date_start_y" value="2020">/
+                <input type="text" id="date_start_m" value="06">/
+                <input type="text" id="date_start_d" value="15">~-->
+            </p>
+            <p>
+                <!--<input type="text" id="date_end_y" value="2020">/
+                <input type="text" id="date_end_m" value="06">/
+                <input type="text" id="date_end_d" value="30">-->
+            </p>
+            <a href="#" id="submit-adjust-dates" class="btn-sticky" onClick="sendAdjustDates()">決定</a>
+        </div>
+
+        <!-- グーグルAuthorizeして勝手にカレンダー入力 -->
+        <div id="fill_in_dates" style="display:none">
+            <p id="adjust-dates-show">日程調整の期間: </p>
+            <p id="show_id"></p>
+            <button id="submit_your_dates" onClick="sendYourDates()">あなたの日程の情報を送る</button>
+            <button id="authorize_button" style="display: none;">Authorize and Automatic Fill in</button>
+            <button id="signout_button" style="display: none;">Sign Out</button>
+        </div>
+
+        <!-- 日程調整の結果を表示 -->
+        <div id="result" style="display:none">
+
+        </div>
+
+
     </div>
 
-    <!-- グーグルAuthorizeして勝手にカレンダー入力 -->
-    <div id="fill_in_dates" style="display:none">
-        <p id="adjust-dates-show">日程調整の期間: </p>
-        <button id="submit_your_dates" onClick="sendYourDates()">あなたの日程の情報を送る</button>
-        <button id="authorize_button" style="display: none;">Authorize and Automatic Fill in</button>
-        <button id="signout_button" style="display: none;">Sign Out</button>
-    </div>
-
-    <!-- 日程調整の結果を表示 -->
-    <div id="result" style="display:none">
-
-    </div>
 
 
     <!--Add buttons to initiate auth sequence and sign out-->
@@ -52,12 +138,21 @@
             crossorigin="anonymous"></script>
     <script type="text/javascript">
         //現在の日付を習得しておく
-        var today = new Date();
+        document.getElementById("date_start").value = "2020-06-22";
+        {
+            var today = new Date();
+            var year = today.getFullYear();
+            var month = ('00' + (today.getMonth() + 1)).slice(-2);
+            var date = ('00' + today.getDate()).slice(-2);
+            document.getElementById("date_start").value = year + "-" + month + "-" + date;// "2020-06-22";
 
-        //使用時は必ず
-        //$('[data-toggle="datepicker"]').datepicker()
-        //と書くこと。
+            today.setDate(today.getDate() + 7);
+            year = today.getFullYear();
+            month = ('00' + (today.getMonth() + 1)).slice(-2);
+            date = ('00' + today.getDate()).slice(-2);
+            document.getElementById("date_end").value = year + "-" + month + "-" + date;// "2020-06-22";
 
+        }
 
         // Client ID and API key from the Developer Console
         //var CLIENT_ID = '<YOUR_CLIENT_ID>';
@@ -144,6 +239,7 @@
                         var date0str = date0.getFullYear() + "/" + date0.getMonth() + "/" + date0.getDate();
                         var date1str = date1.getFullYear() + "/" + date1.getMonth() + "/" + date1.getDate();
                         $('#adjust-dates-show').text("日程調整の期間: " + date0str + " - " + date1str);
+                        $('#show_id').text(String(id));
                     },
                 });
 
@@ -181,7 +277,7 @@
                         //var date0str = date0.getFullYear() + "/" + date0.getMonth() + "/" + date0.getDate() + " " + date0.getHours() + ":" + date0.getMinutes();
                         //var date1str = date1.getFullYear() + "/" + date1.getMonth() + "/" + date1.getDate() + " " + date1.getHours() + ":" + date1.getMinutes();
                         if (i == 0) {
-                            appendPre("日程調整の結果: (" + date0str + " - " + date1str + ")");
+                            appendPre("<p>日程調整の結果: (" + date0str + " - " + date1str + ")</p>");
 
                         } else appendPre(date0str + " - " + date1str);
 
@@ -209,12 +305,19 @@
         function sendAdjustDates() {
             const endpoint = "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec";
             console.log("submit");
-            var y0 = document.getElementById("date_start_y").value;
-            var m0 = document.getElementById("date_start_m").value;
-            var d0 = document.getElementById("date_start_d").value;
-            var y1 = document.getElementById("date_end_y").value;
-            var m1 = document.getElementById("date_end_m").value;
-            var d1 = document.getElementById("date_end_d").value;
+            //var y0 = document.getElementById("date_start_y").value;
+            //var m0 = document.getElementById("date_start_m").value;
+            //var d0 = document.getElementById("date_start_d").value;
+            //var y1 = document.getElementById("date_end_y").value;
+            //var m1 = document.getElementById("date_end_m").value;
+            //var d1 = document.getElementById("date_end_d").value;
+            var date0 = document.getElementById("date_start").value;
+            var date1 = document.getElementById("date_end").value;
+            var y0, m0, d0, y1, m1, d1;
+            var arr0 = date0.split('-');
+            var arr1 = date0.split('-');
+            y0 = arr0[0]; m0 = arr0[1]; d0 = arr0[2];
+            y1 = arr1[0]; m1 = arr1[1]; d1 = arr1[2];
             var day0 = new Date(parseInt(y0), parseInt(m0), parseInt(d0), 0, 0, 0);
             var day1 = new Date(parseInt(y1), parseInt(m1), parseInt(d1), 23, 59, 59);
             console.log(day0);
@@ -311,42 +414,6 @@
                     }
                 });
                 window.location.href = "https://xsmiledur.github.io/entredojo-auto-choseisan-github.io/?id=" + String(id) + "&result=true";
-
-
-            //    console.log("submit");
-            //    var y0 = document.getElementById("date_start_y").value;
-            //    var m0 = document.getElementById("date_start_m").value;
-            //    var d0 = document.getElementById("date_start_d").value;
-            //    var y1 = document.getElementById("date_end_y").value;
-            //    var m1 = document.getElementById("date_end_m").value;
-            //    var d1 = document.getElementById("date_end_d").value;
-            //    var day0 = new Date(y0, m0, d0, 0, 0, 0);
-            //    var day1 = new Date(y1, m1, d1, 23, 59, 59);
-            //    console.log(day0);
-            //    console.log(day1);
-            //    var unix0 = day0.getTime();
-            //    var unix1 = day1.getTime();
-
-            //    /* 区間を送信する */
-            //    $.ajax({
-            //        type: 'GET',
-            //        url: "https://script.google.com/macros/s/AKfycbzO4XVTP61ideHo0dcY_nco-LxZExmlwWygfnavESuB12WEmRMN/exec",
-            //        dataType: 'jsonp',
-            //        data: {
-            //            "id": "",
-            //            "flg": "1",
-            //            "username": "",
-            //            "dates": unix0 + "-" + unix1
-            //        },
-            //        success: out => {
-            //            id = out.id; // idを取ってきた
-            //            console.log("generated id: ", id);
-
-
-            //            window.location.href = "https://xsmiledur.github.io/entredojo-auto-choseisan-github.io/?id=" + String(id) + "&result=true";
-
-            //        }
-            //    });
 
             });
 
