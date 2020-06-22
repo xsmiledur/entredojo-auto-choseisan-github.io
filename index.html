@@ -275,13 +275,12 @@
                         //var date0str = date0.getFullYear() + "/" + date0.getMonth() + "/" + date0.getDate() + " " + date0.getHours() + ":" + date0.getMinutes();
                         //var date1str = date1.getFullYear() + "/" + date1.getMonth() + "/" + date1.getDate() + " " + date1.getHours() + ":" + date1.getMinutes();
                         if (i == 0) {
-                            var tex = res.text;
-                            res.text(tex + "<br/><p>日程調整の結果: (" + date0str + " - " + date1str + ")</p>");
+                            res.appendChild("日程調整期間: " + date0str + " - " + date1str);
+                            res.appendChild("");
+                            res.appendChild("結果: ");
 
                         } else {
-                            var tex = res.text;
-                            res.text(tex + "<br/><p>" + date0str + " - " + date1str + ")</p>");
-                            //appendPre(date0str + " - " + date1str);
+                            res.appendChild(date0str + " - " + date1str + ")");
                         }
 
                     }
