@@ -279,7 +279,7 @@
                             p0.innerHTML = "日程調整期間: " + date0str + " - " + date1str;
                             var p1 = document.createElement("p");
                             p1.innerHTML = "";
-                            var p2 = document.createElement("p");
+                            var p2 = document.createElement("h2");
                             p2.innerHTML = "結果: ";
                             res.appendChild(p0);
                             res.appendChild(p1);
@@ -524,7 +524,9 @@
          */
         function appendPre(message) {
             var pre = document.getElementById('content');
-            var textContent = document.createTextNode(message + '\n');
+            var textContent = document.createElement('p');
+            textContent.innerHTML = message;
+            //var textContent = document.createTextNode(message + '\n');
             pre.appendChild(textContent);
         }
 
@@ -543,7 +545,7 @@
                 'orderBy': 'startTime'
             }).then(function (response) {
                 var events = response.result.items;
-                appendPre('<p>あなたのイベント</p>');
+                appendPre('あなたのイベント');
 
                 if (events.length > 0) {
                     for (i = 0; i < events.length; i++) {
@@ -552,10 +554,10 @@
                         if (!when) {
                             when = event.start.date;
                         }
-                        appendPre('<p>' + event.summary + ' (' + when + ')</p>')
+                        appendPre(event.summary + ' (' + when + ')')
                     }
                 } else {
-                    appendPre('<p>あなたの予定されたイベントはありません</p>');
+                    appendPre('あなたの予定されたイベントはありません');
                 }
             });
         }
