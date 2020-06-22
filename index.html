@@ -276,18 +276,18 @@
                         //var date1str = date1.getFullYear() + "/" + date1.getMonth() + "/" + date1.getDate() + " " + date1.getHours() + ":" + date1.getMinutes();
                         if (i == 0) {
                             var p0 = document.createElement("p");
-                            p0.innerHTML("日程調整期間: " + date0str + " - " + date1str)
+                            p0.innerHTML = "日程調整期間: " + date0str + " - " + date1str;
                             var p1 = document.createElement("p");
-                            p1.innerHTML("")
+                            p1.innerHTML = "";
                             var p2 = document.createElement("p");
-                            p2.innerHTML("結果: ")
+                            p2.innerHTML = "結果: ";
                             res.appendChild(p0);
                             res.appendChild(p1);
                             res.appendChild(p2);
 
                         } else {
                             var p0 = document.createElement("p");
-                            p0.innerHTML(date0str + " - " + date1str)
+                            p0.innerHTML = date0str + " - " + date1str;
                             res.appendChild(p0);
                         }
 
