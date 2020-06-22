@@ -262,7 +262,7 @@
                 },
                 success: out => {
                     var dates = out.dates;
-                    document.getElementById('result');
+                    var res = document.getElementById('result');
                     // 1列目は日程調整しようとした期間が入ってる
                     for (var i = 0; i < dates.length; ++i) {
                         var date0 = new Date(dates[i][0]);
