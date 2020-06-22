@@ -143,7 +143,9 @@
 
         <!-- 日程調整の結果を表示 -->
         <div id="result" style="display:none">
-
+            <div id="result-content"></div>
+            <input id="copy_id_result" type="text" value="https://xsmiledur.github.io/entredojo-auto-choseisan-github.io/?id=" style="display:none;">
+            <a href="#" class="btn-right-radius" onClick="copyToClipboard2()"> Copy link</a>
         </div>
 
 
@@ -284,7 +286,7 @@
                 },
                 success: out => {
                     var dates = out.dates;
-                    var res = document.getElementById('result');
+                    var res = document.getElementById('result-content');
                     // 1列目は日程調整しようとした期間が入ってる
                     for (var i = 0; i < dates.length; ++i) {
                         var date0 = new Date(dates[i][0]);
@@ -297,14 +299,17 @@
                         //var date0str = date0.getFullYear() + "/" + date0.getMonth() + "/" + date0.getDate() + " " + date0.getHours() + ":" + date0.getMinutes();
                         //var date1str = date1.getFullYear() + "/" + date1.getMonth() + "/" + date1.getDate() + " " + date1.getHours() + ":" + date1.getMinutes();
                         if (i == 0) {
-                            var p0 = document.createElement("p");
-                            p0.innerHTML = "日程調整期間: " + date0str + " - " + date1str;
-                            var p1 = document.createElement("p");
-                            p1.innerHTML = "";
+                            //var p0 = document.createElement("div");
+                            //p0.innerHTML = "<h3>日程調整期間</h3>" + date0str + " - " + date1str + "<br/><br/>";
+                            ////var p0_ = document.createElement('p');
+                            ////p0_.innerHTML = date0str + " - " + date1str;
+                            ////var p1 = document.createElement("p");
+                            ////p1.innerHTML = "";
                             var p2 = document.createElement("h2");
                             p2.innerHTML = "日程調整の結果はこちらです↓";
-                            res.appendChild(p0);
-                            res.appendChild(p1);
+                            //res.appendChild(p0);
+                            ////res.appendChild(p0_);
+                            ////res.appendChild(p1);
                             res.appendChild(p2);
 
                         } else {
@@ -314,6 +319,9 @@
                         }
 
                     }
+
+                    $('#copy_id_result').val("https://xsmiledur.github.io/entredojo-auto-choseisan-github.io/?id=" + String(id) + "&result=true");
+
                     /* GoogleアカウントのAuthorizeをして，結果をSpreadsheetに出力 */
                     //handleClientLoad();
                 }
@@ -322,6 +330,20 @@
         function copyToClipboard() {
             // コピー対象をJavaScript上で変数として定義する
             var copyTarget = document.getElementById("copy_id");
+
+            // コピー対象のテキストを選択する
+            //var text = copyTarget.val;
+            copyTarget.select();
+
+            // 選択しているテキストをクリップボードにコピーする
+            document.execCommand("Copy");
+
+            // コピーをお知らせする
+            alert("コピーできました！ : " + copyTarget.value);
+        }
+        function copyToClipboard2() {
+            // コピー対象をJavaScript上で変数として定義する
+            var copyTarget = document.getElementById("copy_id_result");
 
             // コピー対象のテキストを選択する
             //var text = copyTarget.val;
