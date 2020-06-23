@@ -132,7 +132,7 @@
             </p>
             <p><a href="#" id="authorize_button" class="btn-sticky" style="display: none;">UTokyo Google Accountでログインする</a></p>
 
-            <p><a href="#" id="submit_your_dates" class="btn-sticky" onClick="sendYourDates()">あなたの日程の情報を送る</a></p>
+            <p><a href="#" id="submit_your_dates" class="btn-sticky" style="display:none;" onClick="sendYourDates()">あなたの日程の情報を送る</a></p>
 
             <div id="content"></div>
             <br />
@@ -189,6 +189,7 @@
         var SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 
         var authorizeButton = document.getElementById('authorize_button');
+        var submitButton = document.getElementById('submit_your_dates');
         var signoutButton = document.getElementById('signout_button');
 
 
@@ -539,10 +540,12 @@
         function updateSigninStatus(isSignedIn) {
             if (isSignedIn) {
                 authorizeButton.style.display = 'none';
+                submitButton.style.display = 'block';
                 signoutButton.style.display = 'block';
                 listUpcomingEvents();
             } else {
                 authorizeButton.style.display = 'block';
+                submitButton.style.display = 'none';
                 signoutButton.style.display = 'none';
             }
         }
